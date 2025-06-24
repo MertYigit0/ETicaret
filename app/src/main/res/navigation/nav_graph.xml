@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/productListFragment">
+
+    <fragment
+        android:id="@+id/productListFragment"
+        android:name="com.example.eticaret.ui.productlist.ProductListFragment"
+        android:label="Ürünler">
+        <action
+            android:id="@+id/action_productList_to_productDetail"
+            app:destination="@id/productDetailFragment" />
+        <action
+            android:id="@+id/action_productList_to_cart"
+            app:destination="@id/cartFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/productDetailFragment"
+        android:name="com.example.eticaret.ui.productdetail.ProductDetailFragment"
+        android:label="Ürün Detayı">
+        <argument
+            android:name="product"
+            app:argType="com.example.eticaret.data.model.Product" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/cartFragment"
+        android:name="com.example.eticaret.ui.cart.CartFragment"
+        android:label="Sepet" />
+</navigation> 
