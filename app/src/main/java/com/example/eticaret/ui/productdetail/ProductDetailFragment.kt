@@ -90,7 +90,7 @@ class ProductDetailFragment : Fragment() {
                     }
                 }
                 is Resource.Success -> {
-                    Snackbar.make(view, "Added to cart!", Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(view, "Sepete eklendi!", Snackbar.LENGTH_SHORT).show()
                     loadingView?.let { container.removeView(it) }
                     loadingView = null
                     findNavController().popBackStack()

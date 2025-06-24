@@ -27,9 +27,37 @@ class ProductRepository {
         siparisAdeti: Int,
         kullaniciAdi: String
     ) = withContext(Dispatchers.IO) {
-        api.addProductToCart(
-            ad, resim, kategori, fiyat, marka, siparisAdeti, kullaniciAdi
-        )
+        try {
+            // Check if product already exists in cart
+            val cartResponse = api.getCartProducts(kullaniciAdi)
+            if (cartResponse.isSuccessful) {
+                val cartItems = cartResponse.body()?.urunler_sepeti ?: emptyList()
+                val existingItem = cartItems.find { 
+                    it.ad == ad && it.marka == marka && it.fiyat == fiyat 
+                }
+                
+                if (existingItem != null) {
+                    // Product exists, update quantity by deleting and re-adding
+                    val deleteResponse = api.removeProductFromCart(existingItem.sepetId, kullaniciAdi)
+                    if (deleteResponse.isSuccessful) {
+                        val newQuantity = existingItem.siparisAdeti + siparisAdeti
+                        api.addProductToCart(ad, resim, kategori, fiyat, marka, newQuantity, kullaniciAdi)
+                    } else {
+                        // If delete fails, just add normally
+                        api.addProductToCart(ad, resim, kategori, fiyat, marka, siparisAdeti, kullaniciAdi)
+                    }
+                } else {
+                    // Product doesn't exist, add new item
+                    api.addProductToCart(ad, resim, kategori, fiyat, marka, siparisAdeti, kullaniciAdi)
+                }
+            } else {
+                // If cart fetch fails, add normally
+                api.addProductToCart(ad, resim, kategori, fiyat, marka, siparisAdeti, kullaniciAdi)
+            }
+        } catch (e: Exception) {
+            // If any error occurs, fallback to normal add
+            api.addProductToCart(ad, resim, kategori, fiyat, marka, siparisAdeti, kullaniciAdi)
+        }
     }
 
     suspend fun removeProductFromCart(sepetId: Int, kullaniciAdi: String) = withContext(Dispatchers.IO) {
