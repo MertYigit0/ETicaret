@@ -14,6 +14,7 @@ import com.example.eticaret.R
 import com.example.eticaret.data.model.Product
 import com.example.eticaret.util.Resource
 import com.google.android.material.snackbar.Snackbar
+import com.google.gson.Gson
 
 class ProductListFragment : Fragment() {
     private val viewModel: ProductListViewModel by viewModels()
@@ -31,8 +32,11 @@ class ProductListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         recyclerView = view.findViewById(R.id.recyclerViewProducts)
         adapter = ProductListAdapter { product ->
-            val action = ProductListFragmentDirections.actionProductListToProductDetail(product)
-            findNavController().navigate(action)
+            val productJson = Gson().toJson(product)
+            val bundle = Bundle().apply {
+                putString("product", productJson)
+            }
+            findNavController().navigate(R.id.action_productList_to_productDetail, bundle)
         }
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter

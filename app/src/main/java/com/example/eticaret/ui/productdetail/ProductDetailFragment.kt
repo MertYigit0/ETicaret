@@ -12,16 +12,15 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.example.eticaret.R
 import com.example.eticaret.data.model.Product
 import com.example.eticaret.util.Resource
 import com.example.eticaret.util.loadUrl
 import com.google.android.material.snackbar.Snackbar
+import com.google.gson.Gson
 
 class ProductDetailFragment : Fragment() {
     private val viewModel: ProductDetailViewModel by viewModels()
-    private val args: ProductDetailFragmentArgs by navArgs()
     private lateinit var imageView: ImageView
     private lateinit var textName: TextView
     private lateinit var textBrand: TextView
@@ -50,7 +49,15 @@ class ProductDetailFragment : Fragment() {
         buttonAddToCart = view.findViewById(R.id.buttonAddToCart)
         container = view.findViewById(R.id.productDetailContainer)
 
-        val product = args.product
+        // Get product from arguments
+        val productJson = arguments?.getString("product")
+        val product = if (productJson != null) {
+            Gson().fromJson(productJson, Product::class.java)
+        } else {
+            // Fallback product for testing
+            Product(1, "Test Product", 100, "test.jpg", "Test Brand", "Test Category")
+        }
+
         textName.text = product.ad
         textBrand.text = product.marka
         textCategory.text = product.kategori

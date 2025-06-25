@@ -28,14 +28,6 @@ interface ApiService {
     ): Response<ApiResponse>
 
     @FormUrlEncoded
-    @POST("sepetUrunGuncelle.php")
-    suspend fun updateCartItemQuantity(
-        @Field("sepetId") sepetId: Int,
-        @Field("siparisAdeti") siparisAdeti: Int,
-        @Field("kullaniciAdi") kullaniciAdi: String
-    ): Response<ApiResponse>
-
-    @FormUrlEncoded
     @POST("sepettenUrunSil.php")
     suspend fun removeProductFromCart(
         @Field("sepetId") sepetId: Int,
