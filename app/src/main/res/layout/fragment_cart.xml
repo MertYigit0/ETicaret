@@ -3,14 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="8dp">
+    android:padding="16dp"
+    android:background="@color/bg">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewCart"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:clipToPadding="false"/>
+        android:clipToPadding="false"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"/>
 
     <TextView
         android:id="@+id/textTotalPrice"
@@ -18,7 +21,8 @@
         android:layout_height="wrap_content"
         android:text="Toplam: 0 ₺"
         android:textStyle="bold"
-        android:textSize="18sp"
+        android:textSize="20sp"
+        android:textColor="@color/shop_category3"
         android:gravity="end"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"/>

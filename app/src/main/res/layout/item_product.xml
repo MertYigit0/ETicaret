@@ -4,53 +4,52 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    card_view:cardCornerRadius="8dp"
-    card_view:cardElevation="4dp">
+    card_view:cardCornerRadius="18dp"
+    card_view:cardElevation="2dp"
+    card_view:cardBackgroundColor="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:padding="12dp">
 
         <ImageView
             android:id="@+id/imageViewProduct"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
             android:scaleType="centerCrop"
-            android:contentDescription="Product Image" />
+            android:background="@color/bg"
+            android:contentDescription="Product Image"
+            android:layout_marginBottom="8dp"
+            android:clipToOutline="true" />
 
-        <LinearLayout
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/textProductName"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:paddingStart="12dp">
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:textColor="@color/primaryText"
+            android:layout_marginBottom="2dp"
+            android:text="Product Name" />
 
-            <TextView
-                android:id="@+id/textProductName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:text="Product Name" />
+        <TextView
+            android:id="@+id/textProductBrand"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Brand"
+            android:textColor="@color/gray_dark"
+            android:textSize="13sp"
+            android:layout_marginBottom="2dp" />
 
-            <TextView
-                android:id="@+id/textProductBrand"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Brand"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/textProductPrice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0 ₺"
-                android:textColor="@color/purple_500"
-                android:textStyle="bold"
-                android:textSize="15sp" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/textProductPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0 ₺"
+            android:textColor="@color/shop_category3"
+            android:textStyle="bold"
+            android:textSize="15sp" />
     </LinearLayout>
 </androidx.cardview.widget.CardView> 

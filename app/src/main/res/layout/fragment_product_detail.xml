@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bg"
     android:padding="16dp">
 
     <LinearLayout
@@ -13,17 +14,21 @@
         <ImageView
             android:id="@+id/imageViewProductDetail"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="220dp"
             android:scaleType="centerCrop"
-            android:contentDescription="Product Image" />
+            android:background="@color/bg"
+            android:contentDescription="Product Image"
+            android:layout_marginBottom="16dp"
+            android:clipToOutline="true" />
 
         <TextView
             android:id="@+id/textProductNameDetail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:textSize="20sp"
-            android:layout_marginTop="12dp"
+            android:textSize="22sp"
+            android:textColor="@color/primaryText"
+            android:layout_marginTop="4dp"
             android:text="Product Name" />
 
         <TextView
@@ -31,25 +36,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Brand"
+            android:textColor="@color/gray_dark"
             android:textSize="16sp"
-            android:layout_marginTop="4dp" />
+            android:layout_marginTop="2dp" />
 
         <TextView
             android:id="@+id/textProductCategoryDetail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Category"
+            android:textColor="@color/shop_category2"
             android:textSize="16sp"
-            android:layout_marginTop="4dp" />
+            android:layout_marginTop="2dp" />
 
         <TextView
             android:id="@+id/textProductPriceDetail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0 ₺"
-            android:textColor="@color/purple_500"
+            android:textColor="@color/shop_category3"
             android:textStyle="bold"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:layout_marginTop="8dp" />
 
         <LinearLayout
@@ -63,7 +70,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Adet: "
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textColor="@color/primaryText" />
 
             <EditText
                 android:id="@+id/editTextQuantity"
@@ -71,7 +79,8 @@
                 android:layout_height="wrap_content"
                 android:inputType="number"
                 android:text="1"
-                android:gravity="center" />
+                android:gravity="center"
+                android:background="@drawable/search_bar_bg" />
         </LinearLayout>
 
         <Button
@@ -80,6 +89,8 @@
             android:layout_height="wrap_content"
             android:text="Sepete Ekle"
             android:layout_marginTop="24dp"
+            android:backgroundTint="@color/shop_category3"
+            android:textColor="@color/white"
             style="@style/Widget.MaterialComponents.Button" />
     </LinearLayout>
 </ScrollView> 

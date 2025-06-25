@@ -20,4 +20,7 @@
     <color name="shop_category1">#FFD586</color>
     <color name="shop_category2">#FFAAAA</color>
     <color name="shop_category3">#FF9898</color>
+    <color name="bg">#FFF9E3</color>
+
+
 </resources>
