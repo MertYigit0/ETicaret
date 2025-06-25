@@ -1,9 +1,12 @@
 package com.example.eticaret.ui.productlist
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -13,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.eticaret.R
 import com.example.eticaret.data.model.Product
 import com.example.eticaret.util.Resource
+import com.google.android.material.chip.ChipGroup
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 
@@ -31,6 +35,8 @@ class ProductListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recyclerView = view.findViewById(R.id.recyclerViewProducts)
+        val editTextSearch = view.findViewById<EditText>(R.id.editTextSearch)
+        val chipGroup = view.findViewById<ChipGroup>(R.id.chipGroupCategories)
         adapter = ProductListAdapter { product ->
             val productJson = Gson().toJson(product)
             val bundle = Bundle().apply {
@@ -41,6 +47,31 @@ class ProductListFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
 
+        // Search logic
+        editTextSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                viewModel.setSearchQuery(s?.toString() ?: "")
+            }
+            override fun afterTextChanged(s: Editable?) {}
+        })
+
+        // Category filter logic
+        chipGroup.setOnCheckedChangeListener { group, checkedId ->
+            val category = when (checkedId) {
+                R.id.chipAll -> "All"
+                R.id.chipAksesuar -> "Aksesuar"
+                R.id.chipTeknoloji -> "Teknoloji"
+                R.id.chipKozmetik -> "Kozmetik"
+                else -> "All"
+            }
+            viewModel.setCategory(category)
+        }
+
+        viewModel.filteredProducts.observe(viewLifecycleOwner) { filteredList ->
+            adapter.submitList(filteredList)
+        }
+
         viewModel.products.observe(viewLifecycleOwner, Observer { resource ->
             when (resource) {
                 is Resource.Loading -> {
@@ -50,7 +81,6 @@ class ProductListFragment : Fragment() {
                     }
                 }
                 is Resource.Success -> {
-                    adapter.submitList(resource.data ?: emptyList())
                     loadingView?.let { (view as ViewGroup).removeView(it) }
                     loadingView = null
                 }

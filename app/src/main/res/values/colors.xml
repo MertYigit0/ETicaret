@@ -11,4 +11,13 @@
     <color name="gray_dark">#757575</color>
     <color name="primaryText">#212121</color>
     <color name="secondaryText">#757575</color>
+    <!-- Bottom Navigation Colors -->
+    <color name="nav_background">#FFFFFF</color>
+    <color name="nav_selected">#1976D2</color>
+    <color name="nav_unselected">#757575</color>
+    <!-- Custom Shop Colors -->
+    <color name="shop_bg">#FFE99A</color>
+    <color name="shop_category1">#FFD586</color>
+    <color name="shop_category2">#FFAAAA</color>
+    <color name="shop_category3">#FF9898</color>
 </resources>

@@ -13,13 +13,22 @@ class ProductListViewModel(private val repository: ProductRepository = ProductRe
     private val _products = MutableLiveData<Resource<List<Product>>>()
     val products: LiveData<Resource<List<Product>>> = _products
 
+    private val _filteredProducts = MutableLiveData<List<Product>>()
+    val filteredProducts: LiveData<List<Product>> = _filteredProducts
+
+    private var allProducts: List<Product> = emptyList()
+    private var searchQuery: String = ""
+    private var selectedCategory: String = "All"
+
     fun fetchProducts() {
         _products.value = Resource.Loading()
         viewModelScope.launch {
             try {
                 val response = repository.getAllProducts()
                 if (response.isSuccessful) {
-                    _products.value = Resource.Success(response.body()?.urunler ?: emptyList())
+                    allProducts = response.body()?.urunler ?: emptyList()
+                    _products.value = Resource.Success(allProducts)
+                    filterProducts()
                 } else {
                     _products.value = Resource.Error("Failed to load products")
                 }
@@ -27,5 +36,29 @@ class ProductListViewModel(private val repository: ProductRepository = ProductRe
                 _products.value = Resource.Error(e.localizedMessage ?: "Error occurred")
             }
         }
+    }
+
+    fun setSearchQuery(query: String) {
+        searchQuery = query
+        filterProducts()
+    }
+
+    fun setCategory(category: String) {
+        selectedCategory = category
+        filterProducts()
+    }
+
+    private fun filterProducts() {
+        var filtered = allProducts
+        if (selectedCategory != "All") {
+            filtered = filtered.filter { it.kategori.equals(selectedCategory, ignoreCase = true) }
+        }
+        if (searchQuery.isNotBlank()) {
+            filtered = filtered.filter {
+                it.ad.contains(searchQuery, ignoreCase = true) ||
+                it.marka.contains(searchQuery, ignoreCase = true)
+            }
+        }
+        _filteredProducts.value = filtered
     }
 } 
