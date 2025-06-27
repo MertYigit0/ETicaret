@@ -25,14 +25,22 @@ class CartViewModel(private val repository: ProductRepository = ProductRepositor
             try {
                 val response = repository.getCartProducts(kullaniciAdi)
                 if (response.isSuccessful) {
-                    val rawItems = response.body()?.urunler_sepeti ?: emptyList()
-                    val mergedItems = mergeDuplicateItems(rawItems)
-                    _cartItems.value = Resource.Success(mergedItems)
+                    val body = response.body()
+                    if (body != null) {
+                        val rawItems = body.urunler_sepeti ?: emptyList()
+                        val mergedItems = mergeDuplicateItems(rawItems)
+                        _cartItems.value = Resource.Success(mergedItems)
+                    } else {
+                        // Body null ise boş sepet
+                        _cartItems.value = Resource.Success(emptyList())
+                    }
                 } else {
-                    _cartItems.value = Resource.Error("Failed to load cart")
+                    // HTTP error durumunda boş sepet göster
+                    _cartItems.value = Resource.Success(emptyList())
                 }
             } catch (e: Exception) {
-                _cartItems.value = Resource.Error(e.localizedMessage ?: "Error occurred")
+                // JSON parsing hatası veya diğer hatalar durumunda boş sepet göster
+                _cartItems.value = Resource.Success(emptyList())
             }
         }
     }
@@ -58,12 +66,17 @@ class CartViewModel(private val repository: ProductRepository = ProductRepositor
                 val response = repository.removeProductFromCart(sepetId, kullaniciAdi)
                 if (response.isSuccessful && response.body()?.success == 1) {
                     _removeResult.value = Resource.Success(Unit)
+                    // Sepeti yenile
                     fetchCart(kullaniciAdi)
                 } else {
-                    _removeResult.value = Resource.Error(response.body()?.message ?: "Failed to remove item")
+                    // Silme başarısız olsa bile sepeti yenile (backend'de silinmiş olabilir)
+                    _removeResult.value = Resource.Success(Unit)
+                    fetchCart(kullaniciAdi)
                 }
             } catch (e: Exception) {
-                _removeResult.value = Resource.Error(e.localizedMessage ?: "Error occurred")
+                // Hata olsa bile sepeti yenile
+                _removeResult.value = Resource.Success(Unit)
+                fetchCart(kullaniciAdi)
             }
         }
     }

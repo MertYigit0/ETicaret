@@ -52,10 +52,17 @@ class ProductDetailFragment : Fragment() {
         // Get product from arguments
         val productJson = arguments?.getString("product")
         val product = if (productJson != null) {
-            Gson().fromJson(productJson, Product::class.java)
+            try {
+                Gson().fromJson(productJson, Product::class.java)
+            } catch (e: Exception) {
+                Snackbar.make(view, "Ürün bilgileri yüklenemedi", Snackbar.LENGTH_LONG).show()
+                findNavController().popBackStack()
+                return@onViewCreated
+            }
         } else {
-            // Fallback product for testing
-            Product(1, "Test Product", 100, "test.jpg", "Test Brand", "Test Category")
+            Snackbar.make(view, "Ürün bilgileri bulunamadı", Snackbar.LENGTH_LONG).show()
+            findNavController().popBackStack()
+            return@onViewCreated
         }
 
         textName.text = product.ad

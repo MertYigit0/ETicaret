@@ -19,11 +19,7 @@
     <fragment
         android:id="@+id/productDetailFragment"
         android:name="com.example.eticaret.ui.productdetail.ProductDetailFragment"
-        android:label="Ürün Detayı">
-        <argument
-            android:name="product"
-            app:argType="com.example.eticaret.data.model.Product" />
-    </fragment>
+        android:label="Ürün Detayı" />
 
     <fragment
         android:id="@+id/cartFragment"

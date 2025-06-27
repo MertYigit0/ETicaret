@@ -4,6 +4,7 @@ import com.example.eticaret.data.model.Product
 import com.example.eticaret.data.model.CartItem
 import com.example.eticaret.data.remote.ApiClient
 import com.example.eticaret.data.remote.ApiResponse
+import com.example.eticaret.data.remote.CartListResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -15,7 +16,34 @@ class ProductRepository {
     }
 
     suspend fun getCartProducts(kullaniciAdi: String) = withContext(Dispatchers.IO) {
-        api.getCartProducts(kullaniciAdi)
+        try {
+            val response = api.getCartProducts(kullaniciAdi)
+            if (response.isSuccessful) {
+                val body = response.body()
+                if (body != null) {
+                    // Başarılı response, cart items'ları döndür
+                    response
+                } else {
+                    // Body null ise boş sepet olarak kabul et
+                    val emptyResponse = retrofit2.Response.success(
+                        CartListResponse(urunler_sepeti = emptyList(), success = 1)
+                    )
+                    emptyResponse
+                }
+            } else {
+                // HTTP error durumunda boş sepet döndür
+                val emptyResponse = retrofit2.Response.success(
+                    CartListResponse(urunler_sepeti = emptyList(), success = 0)
+                )
+                emptyResponse
+            }
+        } catch (e: Exception) {
+            // JSON parsing hatası veya network hatası durumunda boş sepet döndür
+            val emptyResponse = retrofit2.Response.success(
+                CartListResponse(urunler_sepeti = emptyList(), success = 0)
+            )
+            emptyResponse
+        }
     }
 
     suspend fun addProductToCart(

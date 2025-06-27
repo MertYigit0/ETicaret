@@ -35,15 +35,16 @@ interface ApiService {
     ): Response<ApiResponse>
 }
 
-// Response wrappers
+// Response wrappershangi ülkelerde bahşiş verilmez
 
 data class ProductListResponse(
     val urunler: List<Product>?
 )
 
 data class CartListResponse(
-    val urunler_sepeti: List<CartItem>?,
-    val success: Int?
+    val urunler_sepeti: List<CartItem>? = null,
+    val success: Int? = null,
+    val message: String? = null
 )
 
 data class ApiResponse(

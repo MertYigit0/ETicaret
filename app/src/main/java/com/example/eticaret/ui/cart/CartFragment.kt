@@ -18,6 +18,7 @@ class CartFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: CartAdapter
     private lateinit var textTotal: TextView
+    private lateinit var textEmptyCart: TextView
     private var loadingView: View? = null
 
     override fun onCreateView(
@@ -30,6 +31,7 @@ class CartFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         recyclerView = view.findViewById(R.id.recyclerViewCart)
         textTotal = view.findViewById(R.id.textTotalPrice)
+        textEmptyCart = view.findViewById(R.id.textEmptyCart)
         adapter = CartAdapter(
             onDeleteClick = { cartItem ->
                 viewModel.removeFromCart(cartItem.sepetId, "mertdev")
@@ -49,8 +51,22 @@ class CartFragment : Fragment() {
                 is Resource.Success -> {
                     val items = resource.data ?: emptyList()
                     adapter.submitList(items)
-                    val total = items.sumOf { it.fiyat * it.siparisAdeti }
-                    textTotal.text = "Toplam: $total ₺"
+                    
+                    if (items.isEmpty()) {
+                        // Boş sepet durumu
+                        recyclerView.visibility = View.GONE
+                        textTotal.visibility = View.GONE
+                        textEmptyCart.visibility = View.VISIBLE
+                        textEmptyCart.text = "Sepetiniz boş"
+                    } else {
+                        // Sepette ürün var
+                        recyclerView.visibility = View.VISIBLE
+                        textTotal.visibility = View.VISIBLE
+                        textEmptyCart.visibility = View.GONE
+                        val total = items.sumOf { it.fiyat * it.siparisAdeti }
+                        textTotal.text = "Toplam: $total ₺"
+                    }
+                    
                     loadingView?.let { (view as ViewGroup).removeView(it) }
                     loadingView = null
                 }
