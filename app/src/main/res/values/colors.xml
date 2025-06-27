@@ -3,4 +3,23 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="purple_500">#673AB7</color> <color name="purple_700">#512DA8</color> <color name="teal_200">#00BCD4</color> <color name="error">#D32F2F</color> <color name="gray_light">#ECEFF1</color> <color name="gray_dark">#607D8B</color> <color name="primaryText">#263238</color> <color name="secondaryText">#78909C</color> <color name="nav_background">#FFFFFF</color> <color name="nav_selected">#1976D2</color> <color name="nav_unselected">#90A4AE</color> <color name="shop_bg">#F5F5F5</color> <color name="shop_category1">#FFCC80</color> <color name="shop_category2">#FFAB91</color> <color name="shop_category3">#FF8A65</color> <color name="bg">#FAFAFA</color> </resources>
+    <color name="purple_500">#673AB7</color>
+    <color name="purple_700">#512DA8</color>
+    <color name="teal_200">#00BCD4</color>
+    <color name="error">#D32F2F</color> <color name="gray_light">#ECEFF1</color>
+    <color name="gray_dark">#607D8B</color>
+    <color name="primaryText">#263238</color>
+    <color name="secondaryText">#78909C</color>
+    
+    <!-- Bottom Navigation Colors - Modern & Readable -->
+    <color name="nav_background">#FFFFFF</color>
+    <color name="nav_selected">#FF6B35</color>  <!-- Vibrant Orange for active state -->
+    <color name="nav_unselected">#9E9E9E</color>  <!-- Medium Gray for inactive state -->
+    <color name="nav_text_selected">#FF6B35</color>  <!-- Same as icon for consistency -->
+    <color name="nav_text_unselected">#757575</color>  <!-- Darker gray for better readability -->
+    
+    <color name="shop_bg">#F5F5F5</color>
+    <color name="shop_category1">#FFCC80</color>
+    <color name="shop_category2">#FFAB91</color>
+    <color name="shop_category3">#FF8A65</color>
+    <color name="bg">#FAFAFA</color> </resources>
