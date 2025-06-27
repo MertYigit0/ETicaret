@@ -16,6 +16,7 @@ class ProductListViewModel(private val repository: ProductRepository = ProductRe
     private var allProducts: List<Product> = emptyList()
     private var searchQuery: String = ""
     private var selectedCategory: String = "All"
+    private var sortType: String = "default"
 
     fun fetchProducts() {
         _products.value = Resource.Loading()
@@ -44,6 +45,11 @@ class ProductListViewModel(private val repository: ProductRepository = ProductRe
         filterProducts()
     }
 
+    fun setSortType(sort: String) {
+        sortType = sort
+        filterProducts()
+    }
+
     private fun filterProducts() {
         var filtered = allProducts
         if (selectedCategory != "All") {
@@ -55,6 +61,16 @@ class ProductListViewModel(private val repository: ProductRepository = ProductRe
                 it.marka.contains(searchQuery, ignoreCase = true)
             }
         }
+        
+        // Sıralama işlemi
+        filtered = when (sortType) {
+            "price_asc" -> filtered.sortedBy { it.fiyat }
+            "price_desc" -> filtered.sortedByDescending { it.fiyat }
+            "name_asc" -> filtered.sortedBy { it.ad }
+            "name_desc" -> filtered.sortedByDescending { it.ad }
+            else -> filtered // Varsayılan sıralama
+        }
+        
         _products.value = Resource.Success(filtered)
     }
 } 

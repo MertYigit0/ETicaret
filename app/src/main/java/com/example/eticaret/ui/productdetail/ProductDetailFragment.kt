@@ -16,6 +16,7 @@ import com.example.eticaret.R
 import com.example.eticaret.data.model.Product
 import com.example.eticaret.util.Resource
 import com.example.eticaret.util.loadUrl
+import com.example.eticaret.util.loadUrlWithFitCenter
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 
@@ -69,7 +70,7 @@ class ProductDetailFragment : Fragment() {
         textBrand.text = product.marka
         textCategory.text = product.kategori
         textPrice.text = "${product.fiyat} ₺"
-        imageView.loadUrl("http://kasimadalan.pe.hu/urunler/resimler/${product.resim}")
+        imageView.loadUrlWithFitCenter("http://kasimadalan.pe.hu/urunler/resimler/${product.resim}")
         editQuantity.setText(quantity.toString())
 
         editQuantity.doAfterTextChanged {

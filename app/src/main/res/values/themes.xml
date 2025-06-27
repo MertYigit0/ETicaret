@@ -6,4 +6,19 @@
     </style>
 
     <style name="Theme.ETicaret" parent="Base.Theme.ETicaret" />
+
+    <!-- Custom Bottom Navigation Style -->
+    <style name="CustomBottomNavigation" parent="Widget.Material3.BottomNavigationView">
+        <item name="android:minHeight">56dp</item>
+        <item name="itemIconSize">24dp</item>
+        <item name="itemTextAppearanceActive">@style/BottomNavigationTextAppearance</item>
+        <item name="itemTextAppearanceInactive">@style/BottomNavigationTextAppearance</item>
+        <item name="itemPaddingTop">4dp</item>
+        <item name="itemPaddingBottom">4dp</item>
+    </style>
+
+    <style name="BottomNavigationTextAppearance" parent="TextAppearance.Material3.LabelSmall">
+        <item name="android:textSize">12sp</item>
+        <item name="android:maxLines">1</item>
+    </style>
 </resources>

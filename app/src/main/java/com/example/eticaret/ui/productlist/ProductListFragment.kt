@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.ImageButton
+import android.widget.PopupMenu
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -26,6 +28,7 @@ class ProductListFragment : Fragment() {
     private lateinit var adapter: ProductListAdapter
     private lateinit var editTextSearch: EditText
     private lateinit var chipGroupCategories: ChipGroup
+    private lateinit var buttonSort: ImageButton
     private var loadingView: View? = null
 
     override fun onCreateView(
@@ -41,6 +44,7 @@ class ProductListFragment : Fragment() {
         recyclerView = view.findViewById(R.id.recyclerViewProducts)
         editTextSearch = view.findViewById(R.id.editTextSearch)
         chipGroupCategories = view.findViewById(R.id.chipGroupCategories)
+        buttonSort = view.findViewById(R.id.buttonSort)
         
         // Setup adapter
         adapter = ProductListAdapter { product ->
@@ -69,6 +73,29 @@ class ProductListFragment : Fragment() {
                 else -> "All"
             }
             viewModel.setCategory(category)
+        }
+
+        // Setup sorting functionality
+        buttonSort.setOnClickListener {
+            val popupMenu = PopupMenu(requireContext(), buttonSort)
+            popupMenu.menuInflater.inflate(R.menu.sort_menu, popupMenu.menu)
+            popupMenu.setOnMenuItemClickListener { item ->
+                val sorting = when (item.itemId) {
+                    R.id.action_sort_default -> "default"
+                    R.id.action_sort_price_asc -> "price_asc"
+                    R.id.action_sort_price_desc -> "price_desc"
+                    R.id.action_sort_name_asc -> "name_asc"
+                    R.id.action_sort_name_desc -> "name_desc"
+                    else -> "default"
+                }
+                viewModel.setSortType(sorting)
+                // Sıralama yapıldıktan sonra en üste kaydır
+                recyclerView.post {
+                    recyclerView.smoothScrollToPosition(0)
+                }
+                true
+            }
+            popupMenu.show()
         }
 
         // Observe original products for loading states

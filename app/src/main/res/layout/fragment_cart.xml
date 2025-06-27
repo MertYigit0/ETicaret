@@ -19,15 +19,61 @@
         android:layout_marginTop="100dp"
         android:visibility="gone"/>
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/lottieEmptyCart"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="50dp"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"
-        android:visibility="gone"/>
+    <!-- Boş sepet içeriği - dikey olarak ortalanmış -->
+    <LinearLayout
+        android:id="@+id/emptyCartContainer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="gone">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottieEmptyCart"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"/>
+
+        <TextView
+            android:id="@+id/textEmptyCartTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sepetiniz Boş"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/shop_category3"
+            android:gravity="center"
+            android:layout_marginTop="16dp"/>
+
+        <TextView
+            android:id="@+id/textEmptyCartSubtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Görünüşe göre sepete henüz ürün eklemediniz.\nAlışverişe başlayarak sepetinizi doldurun!"
+            android:textSize="16sp"
+            android:textColor="@color/gray_dark"
+            android:gravity="center"
+            android:layout_marginTop="8dp"
+            android:layout_marginHorizontal="32dp"
+            android:lineSpacingExtra="4dp"/>
+
+        <Button
+            android:id="@+id/buttonStartShopping"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Alışverişe Başla"
+            android:layout_gravity="center"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="@color/shop_category3"
+            android:textColor="@color/white"
+            android:paddingHorizontal="32dp"
+            android:paddingVertical="12dp"
+            style="@style/Widget.MaterialComponents.Button"/>
+
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewCart"
@@ -36,7 +82,8 @@
         android:layout_weight="1"
         android:clipToPadding="false"
         android:paddingTop="8dp"
-        android:paddingBottom="8dp"/>
+        android:paddingBottom="8dp"
+        android:overScrollMode="never"/>
 
     <TextView
         android:id="@+id/textTotalPrice"

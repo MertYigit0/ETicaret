@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
@@ -20,8 +22,12 @@ class CartFragment : Fragment() {
     private lateinit var adapter: CartAdapter
     private lateinit var textTotal: TextView
     private lateinit var textEmptyCart: TextView
+    private lateinit var textEmptyCartTitle: TextView
+    private lateinit var textEmptyCartSubtitle: TextView
+    private lateinit var buttonStartShopping: Button
     private lateinit var lottieEmptyCart: LottieAnimationView
     private var loadingView: View? = null
+    private lateinit var emptyCartContainer: View
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -34,7 +40,11 @@ class CartFragment : Fragment() {
         recyclerView = view.findViewById(R.id.recyclerViewCart)
         textTotal = view.findViewById(R.id.textTotalPrice)
         textEmptyCart = view.findViewById(R.id.textEmptyCart)
+        textEmptyCartTitle = view.findViewById(R.id.textEmptyCartTitle)
+        textEmptyCartSubtitle = view.findViewById(R.id.textEmptyCartSubtitle)
+        buttonStartShopping = view.findViewById(R.id.buttonStartShopping)
         lottieEmptyCart = view.findViewById(R.id.lottieEmptyCart)
+        emptyCartContainer = view.findViewById(R.id.emptyCartContainer)
         
         // Load Lottie animation programmatically with error handling
         try {
@@ -42,6 +52,11 @@ class CartFragment : Fragment() {
         } catch (e: Exception) {
             // If animation fails to load, hide the Lottie view
             lottieEmptyCart.visibility = View.GONE
+        }
+        
+        // Setup shopping button click handler
+        buttonStartShopping.setOnClickListener {
+            findNavController().navigate(R.id.productListFragment)
         }
         
         adapter = CartAdapter(
@@ -68,15 +83,15 @@ class CartFragment : Fragment() {
                         // Boş sepet durumu
                         recyclerView.visibility = View.GONE
                         textTotal.visibility = View.GONE
-                        textEmptyCart.visibility = View.VISIBLE
-                        lottieEmptyCart.visibility = View.VISIBLE
-                        textEmptyCart.text = "Sepetiniz boş"
+                        textEmptyCart.visibility = View.GONE
+                        emptyCartContainer.visibility = View.VISIBLE
                     } else {
                         // Sepette ürün var
                         recyclerView.visibility = View.VISIBLE
                         textTotal.visibility = View.VISIBLE
                         textEmptyCart.visibility = View.GONE
-                        lottieEmptyCart.visibility = View.GONE
+                        emptyCartContainer.visibility = View.GONE
+                        adapter.submitList(items)
                         val total = items.sumOf { it.fiyat * it.siparisAdeti }
                         textTotal.text = "Toplam: $total ₺"
                     }
