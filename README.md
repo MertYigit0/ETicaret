@@ -37,8 +37,8 @@ ETicaret is a modern Android e-commerce application that provides users with a s
     <th>Cart Screen</th>
   </tr>
   <tr>
-    <td><img src="https://github.com/user-attachments/assets/cbb23fc0-9b49-4bfe-89eb-59725f768c84" height="500" alt="Product List"></td>
-    <td><img src="https://github.com/user-attachments/assets/25573b65-664e-440c-9c49-51b57fe77795" height="500" alt="Product Detail"></td>
+    <td><img src="https://github.com/user-attachments/assets/25573b65-664e-440c-9c49-51b57fe77795" height="500" alt="Product List"></td>
+    <td><img src="https://github.com/user-attachments/assets/cbb23fc0-9b49-4bfe-89eb-59725f768c84" height="500" alt="Product Detail"></td>
     <td><img src="https://github.com/user-attachments/assets/974b5b48-5f94-4b30-90a9-38750df0a20b" height="500" alt="Cart Screen"></td>
 
   </tr>
