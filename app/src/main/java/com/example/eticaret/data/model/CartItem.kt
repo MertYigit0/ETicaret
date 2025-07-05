@@ -6,7 +6,6 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class CartItem(
     val sepetId: Int,
-    //val urun_id: Int,
     val ad: String,
     val fiyat: Int,
     val resim: String,

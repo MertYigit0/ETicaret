@@ -14,6 +14,8 @@ class CartViewModel(private val repository: ProductRepository = ProductRepositor
     val cartItems: LiveData<Resource<List<CartItem>>> = _cartItems
     private val _removeResult = MutableLiveData<Resource<Unit>>()
     val removeResult: LiveData<Resource<Unit>> = _removeResult
+    private val _updateQuantityResult = MutableLiveData<Resource<Unit>>()
+    val updateQuantityResult: LiveData<Resource<Unit>> = _updateQuantityResult
 
     fun fetchCart(kullaniciAdi: String) {
         if (kullaniciAdi.isBlank()) {
@@ -77,6 +79,46 @@ class CartViewModel(private val repository: ProductRepository = ProductRepositor
                 // Hata olsa bile sepeti yenile
                 _removeResult.value = Resource.Success(Unit)
                 fetchCart(kullaniciAdi)
+            }
+        }
+    }
+
+    fun updateQuantity(cartItem: CartItem, newQuantity: Int, kullaniciAdi: String) {
+        if (newQuantity <= 0) {
+            // If quantity is 0 or negative, remove the item
+            removeFromCart(cartItem.sepetId, kullaniciAdi)
+            return
+        }
+
+        _updateQuantityResult.value = Resource.Loading()
+        viewModelScope.launch {
+            try {
+                // Remove the existing item
+                val removeResponse = repository.removeProductFromCart(cartItem.sepetId, kullaniciAdi)
+                if (removeResponse.isSuccessful) {
+                    // Add the item back with new quantity
+                    val addResponse = repository.addProductToCart(
+                        ad = cartItem.ad,
+                        resim = cartItem.resim,
+                        kategori = cartItem.kategori,
+                        fiyat = cartItem.fiyat,
+                        marka = cartItem.marka,
+                        siparisAdeti = newQuantity,
+                        kullaniciAdi = kullaniciAdi
+                    )
+                    
+                    if (addResponse.isSuccessful) {
+                        _updateQuantityResult.value = Resource.Success(Unit)
+                        // Refresh cart to get updated data
+                        fetchCart(kullaniciAdi)
+                    } else {
+                        _updateQuantityResult.value = Resource.Error("Miktar güncellenirken hata oluştu")
+                    }
+                } else {
+                    _updateQuantityResult.value = Resource.Error("Miktar güncellenirken hata oluştu")
+                }
+            } catch (e: Exception) {
+                _updateQuantityResult.value = Resource.Error("Miktar güncellenirken hata oluştu: ${e.message}")
             }
         }
     }

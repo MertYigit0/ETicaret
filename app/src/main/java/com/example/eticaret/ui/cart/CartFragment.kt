@@ -62,6 +62,9 @@ class CartFragment : Fragment() {
         adapter = CartAdapter(
             onDeleteClick = { cartItem ->
                 viewModel.removeFromCart(cartItem.sepetId, "mertdev")
+            },
+            onQuantityUpdate = { cartItem, newQuantity ->
+                viewModel.updateQuantity(cartItem, newQuantity, "mertdev")
             }
         )
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -106,6 +109,7 @@ class CartFragment : Fragment() {
                 }
             }
         }
+        
         viewModel.removeResult.observe(viewLifecycleOwner) { resource ->
             when (resource) {
                 is Resource.Loading -> {
@@ -126,6 +130,28 @@ class CartFragment : Fragment() {
                 }
             }
         }
+        
+        viewModel.updateQuantityResult.observe(viewLifecycleOwner) { resource ->
+            when (resource) {
+                is Resource.Loading -> {
+                    if (loadingView == null) {
+                        loadingView = LayoutInflater.from(requireContext()).inflate(R.layout.loading_view, view as ViewGroup, false)
+                        (view as ViewGroup).addView(loadingView)
+                    }
+                }
+                is Resource.Success -> {
+                    Snackbar.make(view, "Miktar güncellendi", Snackbar.LENGTH_SHORT).show()
+                    loadingView?.let { (view as ViewGroup).removeView(it) }
+                    loadingView = null
+                }
+                is Resource.Error -> {
+                    Snackbar.make(view, resource.message ?: "Miktar güncellenirken hata oluştu", Snackbar.LENGTH_LONG).show()
+                    loadingView?.let { (view as ViewGroup).removeView(it) }
+                    loadingView = null
+                }
+            }
+        }
+        
         viewModel.fetchCart("mertdev")
     }
 } 

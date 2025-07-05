@@ -1,5 +1,7 @@
 package com.example.eticaret.data.repository
 
+import android.util.Log
+
 import com.example.eticaret.data.model.Product
 import com.example.eticaret.data.model.CartItem
 import com.example.eticaret.data.remote.ApiClient
@@ -37,13 +39,15 @@ class ProductRepository {
                 )
                 emptyResponse
             }
-        } catch (e: Exception) {
+        }  catch (e: Exception) {
             // JSON parsing hatası veya network hatası durumunda boş sepet döndür
             val emptyResponse = retrofit2.Response.success(
                 CartListResponse(urunler_sepeti = emptyList(), success = 0)
             )
             emptyResponse
         }
+
+
     }
 
     suspend fun addProductToCart(

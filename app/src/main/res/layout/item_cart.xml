@@ -58,14 +58,47 @@
                 android:textStyle="bold"
                 android:textSize="15sp" />
 
-            <TextView
-                android:id="@+id/textCartProductQuantity"
+            <!-- Quantity Controls -->
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Adet: 1"
-                android:textSize="14sp"
-                android:layout_marginTop="2dp"
-                android:textColor="@color/shop_category2" />
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp"
+                android:gravity="center_vertical">
+
+                <ImageButton
+                    android:id="@+id/buttonMinus"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/baseline_remove_24"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="Decrease Quantity"
+                    android:scaleType="centerInside"
+                    android:padding="4dp" />
+
+                <TextView
+                    android:id="@+id/textCartProductQuantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/shop_category2"
+                    android:layout_marginHorizontal="12dp"
+                    android:minWidth="24dp"
+                    android:gravity="center" />
+
+                <ImageButton
+                    android:id="@+id/buttonPlus"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/outline_add_24"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="Increase Quantity"
+                    android:scaleType="centerInside"
+                    android:padding="4dp" />
+
+            </LinearLayout>
         </LinearLayout>
 
         <ImageView
