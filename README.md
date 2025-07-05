@@ -37,14 +37,15 @@ ETicaret is a modern Android e-commerce application that provides users with a s
     <th>Cart Screen</th>
   </tr>
   <tr>
-    <td><img src="screenshots/product_list.png" height="500" alt="Product List"></td>
-    <td><img src="screenshots/product_detail.png" height="500" alt="Product Detail"></td>
-    <td><img src="screenshots/cart_screen.png" height="500" alt="Cart Screen"></td>
+    <td><img src="https://github.com/user-attachments/assets/cbb23fc0-9b49-4bfe-89eb-59725f768c84" height="500" alt="Product List"></td>
+    <td><img src="https://github.com/user-attachments/assets/25573b65-664e-440c-9c49-51b57fe77795" height="500" alt="Product Detail"></td>
+    <td><img src="https://github.com/user-attachments/assets/974b5b48-5f94-4b30-90a9-38750df0a20b" height="500" alt="Cart Screen"></td>
+
   </tr>
 </table>
 
 ## Demo Video
-[![ETicaret Demo](https://img.youtube.com/vi/VIDEO_ID/0.jpg)](https://www.youtube.com/watch?v=VIDEO_ID)
+[![ETicaret Demo](https://github.com/user-attachments/assets/a0b6cc1e-3b81-4271-8308-5749d4d7855e)](https://www.youtube.com/shorts/ptuaDUdYPSs)
 
 ## Architecture
 - **MVVM Pattern**: Clean separation of concerns with ViewModel and LiveData
